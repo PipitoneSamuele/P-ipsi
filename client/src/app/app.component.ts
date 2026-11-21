@@ -11,5 +11,5 @@ import { FooterComponent } from './shared/footer/footer.component';
   styleUrl: './app.component.sass'
 })
 export class AppComponent {
-  title = 'client';
+  title = 'Personal P. Page';
 }
