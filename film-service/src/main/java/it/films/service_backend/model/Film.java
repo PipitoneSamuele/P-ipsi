@@ -6,26 +6,24 @@ public class Film {
     private String title;
     private String description;
     private String posterUrl;
-    private Integer releaseYear;
     private Integer rating;
+    private String watchDate;
 
-    public Film() {
-    }
+    public Film() {}
 
     public Film(
             String id,
             String title,
-            String description,
-            String posterUrl,
-            Integer releaseYear,
-            Integer rating
+            String description, String posterUrl,
+            Integer rating,
+            String watchDate
     ) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.posterUrl = posterUrl;
-        this.releaseYear = releaseYear;
         this.rating = rating;
+        this.watchDate = watchDate;
     }
 
     public String getId() {
@@ -44,12 +42,12 @@ public class Film {
         return posterUrl;
     }
 
-    public Integer getReleaseYear() {
-        return releaseYear;
-    }
-
     public Integer getRating() {
         return rating;
+    }
+
+    public String getWatchDate() {
+        return watchDate;
     }
 
 }
