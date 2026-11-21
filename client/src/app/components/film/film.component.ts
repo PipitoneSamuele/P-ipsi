@@ -1,56 +1,56 @@
 import { Component } from '@angular/core';
-
-interface Film {
-  title: string;
-  image: string;
-  rating: number;
-  watchDate: string;
-}
+import { Film } from '../../models/film';
+import { FilmService } from '../../services/film.service';
+import { FormsModule } from '@angular/forms';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-film',
   standalone: true,
-  imports: [],
+  imports: [FormsModule, DatePipe],
   templateUrl: './film.component.html',
   styleUrl: './film.component.sass'
 })
 export class FilmComponent {
   
+films: Film[] = [];
   searchTerm = '';
 
-  films: Film[] = [
-  {
-    title: 'Inception',
-    image: 'https://placehold.co/300x450/222/fff?text=Inception',
-    rating: 5,
-    watchDate: '15/11/2026'
-  },
-  {
-    title: 'Interstellar',
-    image: 'https://placehold.co/300x450/222/fff?text=Interstellar',
-    rating: 5,
-    watchDate: '10/11/2026'
-  },
-  {
-    title: 'The Dark Knight',
-    image: 'https://placehold.co/300x450/222/fff?text=Dark+Knight',
-    rating: 4,
-    watchDate: '05/11/2026'
+  loading = false;
+  errorMessage = '';
+
+  constructor(private filmService: FilmService) {}
+
+  ngOnInit(): void {
+    this.loadFilms();
   }
-];
+
+  loadFilms(): void {
+    this.loading = true;
+    this.errorMessage = '';
+
+    this.filmService.getFilms().subscribe({
+      next: (films) => {
+        this.films = films;
+        this.loading = false;
+      },
+      error: (error) => {
+        console.error('Errore durante il caricamento dei film:', error);
+        this.errorMessage = 'Impossibile caricare i film.';
+        this.loading = false;
+      }
+    });
+  }
 
   get filteredFilms(): Film[] {
     return this.films.filter(film =>
-      film.title.toLowerCase().includes(
-        this.searchTerm.toLowerCase()
-      )
+      film.title.toLowerCase().includes(this.searchTerm.toLowerCase())
     );
   }
 
-  getStars(rating: number): boolean[] {
-    return Array.from(
-      { length: 5 },
-      (_, index) => index < Math.round(rating)
+  getStars(rating: number): string[] {
+    return Array.from({ length: 5 }, (_, index) =>
+      index < rating ? '★' : '☆'
     );
   }
 
