@@ -1,0 +1,48 @@
+
+<div class="film-page">
+
+  <!-- Search bar -->
+  <div class="search-container">
+    <input
+      type="text"
+      placeholder="Cerca un film..."
+      [(value)]="searchTerm"
+      (input)="searchTerm = $any($event.target).value"
+    />
+  </div>
+
+  <!-- Film list -->
+  <div class="film-grid">
+
+    @for (film of filteredFilms; track film.title) {
+      <div class="film-card">
+
+        <img
+          [src]="film.image"
+          [alt]="film.title"
+        />
+
+        <div class="film-info">
+
+          <h3>{{ film.title }}</h3>
+
+          <div class="rating">
+            @for (star of getStars(film.rating); track $index) {
+              <span [class.filled]="star">★</span>
+            }
+          </div>
+
+        </div>
+
+      </div>
+    }
+
+    @if (filteredFilms.length === 0) {
+      <p class="no-results">
+        Nessun film trovato.
+      </p>
+    }
+
+  </div>
+
+</div>
