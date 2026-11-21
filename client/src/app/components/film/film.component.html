@@ -1,7 +1,5 @@
-
 <div class="film-page">
 
-  <!-- Search bar -->
   <div class="search-container">
     <input
       type="text"
@@ -11,29 +9,25 @@
     />
   </div>
 
-  <!-- Film list -->
   <div class="film-grid">
-
     @for (film of filteredFilms; track film.title) {
       <div class="film-card">
-
         <img
           [src]="film.image"
           [alt]="film.title"
         />
-
         <div class="film-info">
-
           <h3>{{ film.title }}</h3>
-
           <div class="rating">
             @for (star of getStars(film.rating); track $index) {
               <span [class.filled]="star">★</span>
             }
           </div>
-
+          <div class="watch-date">
+            <span>Data visione:</span>
+            <strong>{{ film.watchDate }}</strong>
+          </div>
         </div>
-
       </div>
     }
 
@@ -44,5 +38,4 @@
     }
 
   </div>
-
 </div>
