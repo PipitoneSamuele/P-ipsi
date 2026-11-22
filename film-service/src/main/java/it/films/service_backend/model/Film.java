@@ -1,26 +1,31 @@
 package it.films.service_backend.model;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Document(collection = "films")
 public class Film {
 
+    @Id
     private String id;
+
     private String title;
-    private String description;
     private String posterUrl;
     private Integer rating;
     private String watchDate;
 
-    public Film() {}
+    public Film() {
+    }
 
     public Film(
             String id,
             String title,
-            String description, String posterUrl,
+            String posterUrl,
             Integer rating,
             String watchDate
     ) {
         this.id = id;
         this.title = title;
-        this.description = description;
         this.posterUrl = posterUrl;
         this.rating = rating;
         this.watchDate = watchDate;
@@ -32,10 +37,6 @@ public class Film {
 
     public String getTitle() {
         return title;
-    }
-
-    public String getDescription() {
-        return description;
     }
 
     public String getPosterUrl() {
@@ -50,4 +51,23 @@ public class Film {
         return watchDate;
     }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setPosterUrl(String posterUrl) {
+        this.posterUrl = posterUrl;
+    }
+
+    public void setRating(Integer rating) {
+        this.rating = rating;
+    }
+
+    public void setWatchDate(String watchDate) {
+        this.watchDate = watchDate;
+    }
 }
