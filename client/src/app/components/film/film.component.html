@@ -43,22 +43,34 @@
       [(ngModel)]="minRatingFilter"
       name="minRatingFilter"
     >
-      <option [ngValue]="0">Voto</option>
-      <option [ngValue]="1">1+ ★</option>
-      <option [ngValue]="2">2+ ★</option>
-      <option [ngValue]="3">3+ ★</option>
-      <option [ngValue]="4">4+ ★</option>
-      <option [ngValue]="5">5 ★</option>
+      <option value="0">Tutte le valutazioni</option>
+      <option value="1">★ 1 stella</option>
+      <option value="2">★ 2 stelle</option>
+      <option value="3">★ 3 stelle</option>
+      <option value="4">★ 4 stelle</option>
+      <option value="5">★ 5 stelle</option>
     </select>
 
     <!-- Filtro anno -->
-    <input
-      class="year-filter"
-      type="number"
-      [(ngModel)]="releaseYearFilter"
-      name="releaseYearFilter"
-      placeholder="Anno"
-    />
+    <select
+      class="filter-select"
+      [(ngModel)]="decadeFilter"
+      name="decadeFilter"
+    >
+      <option value="">Decennio</option>
+      <option value="1910">Anni '10</option>
+      <option value="1920">Anni '20</option>
+      <option value="1930">Anni '30</option>
+      <option value="1940">Anni '40</option>
+      <option value="1950">Anni '50</option>
+      <option value="1960">Anni '60</option>
+      <option value="1970">Anni '70</option>
+      <option value="1980">Anni '80</option>
+      <option value="1990">Anni '90</option>
+      <option value="2000">Anni 2000</option>
+      <option value="2010">Anni 2010</option>
+      <option value="2020">Anni 2020</option>
+    </select>
 
     <!-- Reset filtri -->
     <button
@@ -163,6 +175,8 @@
             type="number"
             [(ngModel)]="newFilm.releaseYear"
             name="releaseYear"
+            min="0"
+            step="1"
             placeholder="Es. 2014"
           />
 

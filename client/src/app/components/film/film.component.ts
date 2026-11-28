@@ -22,7 +22,7 @@ export class FilmComponent implements OnInit {
   searchTerm = '';
   genreFilter = '';
   minRatingFilter = 0;
-  releaseYearFilter = '';
+  decadeFilter = '';
 
   loading = false;
   errorMessage = '';
@@ -88,16 +88,20 @@ export class FilmComponent implements OnInit {
         film.genre?.toLowerCase() === this.genreFilter.toLowerCase();
 
       const matchesRating =
-        film.rating >= this.minRatingFilter;
+        !this.minRatingFilter ||
+        film.rating === Number(this.minRatingFilter);
 
-      const matchesYear =
-        !this.releaseYearFilter ||
-        film.releaseYear?.toString() === this.releaseYearFilter;
+      const matchesDecade =
+        !this.decadeFilter ||
+        (
+          !!film.releaseYear &&
+          Math.floor(film.releaseYear / 10) * 10 === Number(this.decadeFilter)
+        );
 
       return matchesSearch &&
             matchesGenre &&
             matchesRating &&
-            matchesYear;
+            matchesDecade;
     });
   }
 
@@ -169,7 +173,7 @@ export class FilmComponent implements OnInit {
     this.searchTerm = '';
     this.genreFilter = '';
     this.minRatingFilter = 0;
-    this.releaseYearFilter = '';
+    this.decadeFilter = '';
   }
 
 }
