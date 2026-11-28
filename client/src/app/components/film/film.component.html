@@ -119,7 +119,10 @@
 
       @for (film of filteredFilms; track film.id) {
 
-        <div class="film-card">
+        <div
+          class="film-card"
+          [routerLink]="['/films', film.id]"
+        >
 
           <!-- Pulsante elimina -->
           <button

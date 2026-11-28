@@ -5,11 +5,12 @@ import { DatePipe } from '@angular/common';
 
 import { Film } from '../../models/film';
 import { FilmService } from '../../services/film.service';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-film',
   standalone: true,
-  imports: [FormsModule, DatePipe],
+  imports: [FormsModule, DatePipe, RouterLink],
   templateUrl: './film.component.html',
   styleUrl: './film.component.sass'
 })
