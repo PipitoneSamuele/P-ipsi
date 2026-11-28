@@ -67,23 +67,18 @@ export class FilmComponent {
     this.showForm = !this.showForm;
   }
 
-  addFilm(): void {
+  addFilm() {
+    if (!this.newFilm.posterUrl) {
+      this.newFilm.posterUrl = 'https://placehold.co/300x450';
+    }
+
     this.filmService.addFilm(this.newFilm).subscribe({
       next: (film) => {
         this.films.push(film);
-
-        this.newFilm = {
-          id: '',
-          title: '',
-          posterUrl: '',
-          rating: 0,
-          watchDate: ''
-        };
-
         this.showForm = false;
       },
       error: (error) => {
-        console.error('Errore durante l\'aggiunta del film:', error);
+        console.error(error);
       }
     });
   }
