@@ -4,29 +4,89 @@
   <!-- Toolbar -->
   <div class="toolbar">
 
-    <button class="add-film-button" (click)="toggleForm()">
+    <!-- Aggiungi film -->
+    <button
+      type="button"
+      class="add-film-button"
+      (click)="toggleForm()"
+    >
       {{ showForm ? 'Annulla' : '+ Aggiungi film' }}
     </button>
 
-    <!-- Barra di ricerca -->
+    <!-- Ricerca -->
     <div class="search-bar">
       <input
         type="text"
-        placeholder="Cerca un film..."
+        placeholder="Cerca titolo o regista..."
         [(ngModel)]="searchTerm"
       />
     </div>
 
+    <!-- Filtro genere -->
+    <select
+      class="filter-select"
+      [(ngModel)]="genreFilter"
+      name="genreFilter"
+    >
+      <option value="">Genere</option>
+
+      @for (genre of availableGenres; track genre) {
+        <option [value]="genre">
+          {{ genre }}
+        </option>
+      }
+    </select>
+
+    <!-- Filtro voto -->
+    <select
+      class="filter-select"
+      [(ngModel)]="minRatingFilter"
+      name="minRatingFilter"
+    >
+      <option [ngValue]="0">Voto</option>
+      <option [ngValue]="1">1+ ★</option>
+      <option [ngValue]="2">2+ ★</option>
+      <option [ngValue]="3">3+ ★</option>
+      <option [ngValue]="4">4+ ★</option>
+      <option [ngValue]="5">5 ★</option>
+    </select>
+
+    <!-- Filtro anno -->
+    <input
+      class="year-filter"
+      type="number"
+      [(ngModel)]="releaseYearFilter"
+      name="releaseYearFilter"
+      placeholder="Anno"
+    />
+
+    <!-- Reset filtri -->
+    <button
+      type="button"
+      class="reset-filters-button"
+      (click)="resetFilters()"
+      title="Reset filtri"
+    >
+      ↺
+    </button>
+
   </div>
 
-  <!-- Modal per aggiungere un film -->
+  <!-- Modal aggiunta film -->
   @if (showForm) {
-    <div class="modal-overlay" (click)="toggleForm()">
+    <div
+      class="modal-overlay"
+      (click)="toggleForm()"
+    >
 
-      <div class="modal-content" (click)="$event.stopPropagation()">
+      <div
+        class="modal-content"
+        (click)="$event.stopPropagation()"
+      >
 
-        <!-- Header modal -->
+        <!-- Header -->
         <div class="modal-header">
+
           <h2>Aggiungi un film</h2>
 
           <button
@@ -36,12 +96,18 @@
           >
             &times;
           </button>
+
         </div>
 
         <!-- Form -->
-        <form class="film-form" (ngSubmit)="addFilm()">
+        <form
+          class="film-form"
+          (ngSubmit)="addFilm()"
+        >
 
+          <!-- Titolo -->
           <label for="title">Titolo</label>
+
           <input
             id="title"
             type="text"
@@ -51,17 +117,20 @@
             required
           />
 
+          <!-- Locandina -->
           <label for="posterUrl">URL locandina</label>
+
           <input
             id="posterUrl"
             type="url"
             [(ngModel)]="newFilm.posterUrl"
             name="posterUrl"
             placeholder="https://..."
-            required
           />
 
+          <!-- Voto -->
           <label for="rating">Voto</label>
+
           <select
             id="rating"
             [(ngModel)]="newFilm.rating"
@@ -75,7 +144,9 @@
             <option [ngValue]="5">★★★★★</option>
           </select>
 
+          <!-- Data visione -->
           <label for="watchDate">Data di visione</label>
+
           <input
             id="watchDate"
             type="date"
@@ -84,84 +155,87 @@
             required
           />
 
-          <!-- Anno di uscita -->
-          <div class="form-group">
-            <label for="releaseYear">Anno di uscita</label>
-            <input
-              id="releaseYear"
-              type="number"
-              [(ngModel)]="newFilm.releaseYear"
-              name="releaseYear"
-              placeholder="Es. 2014"
-            />
-          </div>
+          <!-- Anno -->
+          <label for="releaseYear">Anno di uscita</label>
+
+          <input
+            id="releaseYear"
+            type="number"
+            [(ngModel)]="newFilm.releaseYear"
+            name="releaseYear"
+            placeholder="Es. 2014"
+          />
 
           <!-- Genere -->
-          <div class="form-group">
-            <label for="genre">Genere</label>
-            <input
-              id="genre"
-              type="text"
-              [(ngModel)]="newFilm.genre"
-              name="genre"
-              placeholder="Es. Fantascienza"
-            />
-          </div>
+          <label for="genre">Genere</label>
+
+          <input
+            id="genre"
+            type="text"
+            [(ngModel)]="newFilm.genre"
+            name="genre"
+            placeholder="Es. Fantascienza"
+          />
 
           <!-- Regista -->
-          <div class="form-group">
-            <label for="director">Regista</label>
-            <input
-              id="director"
-              type="text"
-              [(ngModel)]="newFilm.director"
-              name="director"
-              placeholder="Es. Christopher Nolan"
-            />
-          </div>
+          <label for="director">Regista</label>
+
+          <input
+            id="director"
+            type="text"
+            [(ngModel)]="newFilm.director"
+            name="director"
+            placeholder="Es. Christopher Nolan"
+          />
 
           <!-- Durata -->
-          <div class="form-group">
-            <label for="duration">Durata (minuti)</label>
-            <input
-              id="duration"
-              type="number"
-              [(ngModel)]="newFilm.duration"
-              name="duration"
-              placeholder="Es. 169"
-            />
-          </div>
+          <label for="duration">Durata (minuti)</label>
+
+          <input
+            id="duration"
+            type="number"
+            [(ngModel)]="newFilm.duration"
+            name="duration"
+            placeholder="Es. 169"
+          />
 
           <!-- Trama -->
-          <div class="form-group">
-            <label for="plot">Trama</label>
-            <textarea
-              id="plot"
-              [(ngModel)]="newFilm.plot"
-              name="plot"
-              placeholder="Inserisci la trama del film..."
-            ></textarea>
-          </div>
+          <label for="plot">Trama</label>
 
-          <!-- Recensione personale -->
-          <div class="form-group">
-            <label for="personalReview">La tua recensione</label>
-            <textarea
-              id="personalReview"
-              [(ngModel)]="newFilm.personalReview"
-              name="personalReview"
-              placeholder="Scrivi le tue impressioni..."
-            ></textarea>
-          </div>
+          <textarea
+            id="plot"
+            [(ngModel)]="newFilm.plot"
+            name="plot"
+            placeholder="Inserisci la trama..."
+            rows="4"
+          ></textarea>
+
+          <!-- Recensione -->
+          <label for="personalReview">La tua recensione</label>
+
+          <textarea
+            id="personalReview"
+            [(ngModel)]="newFilm.personalReview"
+            name="personalReview"
+            placeholder="Scrivi le tue impressioni..."
+            rows="4"
+          ></textarea>
 
           <!-- Pulsanti -->
           <div class="form-buttons">
 
-            <button type="button" class="cancel-button" (click)="toggleForm()">
+            <button
+              type="button"
+              class="cancel-button"
+              (click)="toggleForm()"
+            >
               Annulla
             </button>
 
-            <button type="submit" class="save-button">
+            <button
+              type="submit"
+              class="save-button"
+            >
               Salva film
             </button>
 
@@ -170,21 +244,25 @@
         </form>
 
       </div>
+
     </div>
   }
 
   <!-- Caricamento -->
   @if (loading) {
-    <p>Caricamento film...</p>
+    <p class="status-message">Caricamento film...</p>
   }
 
   <!-- Errore -->
   @if (errorMessage) {
-    <p>{{ errorMessage }}</p>
+    <p class="error-message">
+      {{ errorMessage }}
+    </p>
   }
 
   <!-- Catalogo -->
   @if (!loading && !errorMessage) {
+
     <div class="films-grid">
 
       @for (film of filteredFilms; track film.id) {
@@ -194,7 +272,7 @@
           [routerLink]="['/films', film.id]"
         >
 
-          <!-- Pulsante elimina -->
+          <!-- Elimina -->
           <button
             type="button"
             class="delete-film-button"
@@ -206,31 +284,34 @@
 
           <!-- Locandina -->
           <img
-            [src]="film.posterUrl"
+            [src]="film.posterUrl || 'https://placehold.co/300x450'"
             [alt]="film.title"
           />
 
           <!-- Titolo -->
           <h3>{{ film.title }}</h3>
 
-          <!-- Valutazione -->
+          <!-- Voto -->
           <div class="rating">
             @for (star of getStars(film.rating); track $index) {
               <span>{{ star }}</span>
             }
           </div>
 
-          <!-- Data di visione -->
+          <!-- Data visione -->
           <div class="watch-date">
-            <span>
-              Visto il {{ film.watchDate | date:'dd/MM/yyyy' }}
-            </span>
+            Visto il {{ film.watchDate | date:'dd/MM/yyyy' }}
           </div>
 
         </div>
 
       } @empty {
-        <p>Nessun film trovato.</p>
+
+        <div class="empty-state">
+          <p>Nessun film trovato.</p>
+          <span>Prova a modificare i filtri o la ricerca.</span>
+        </div>
+
       }
 
     </div>

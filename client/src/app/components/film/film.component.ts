@@ -20,6 +20,9 @@ export class FilmComponent implements OnInit {
 
   films: Film[] = [];
   searchTerm = '';
+  genreFilter = '';
+  minRatingFilter = 0;
+  releaseYearFilter = '';
 
   loading = false;
   errorMessage = '';
@@ -70,13 +73,32 @@ export class FilmComponent implements OnInit {
     });
   }
 
-  // Filtra i film in base al titolo
+  // Filtra i film in base ad alcuni criteri
   get filteredFilms(): Film[] {
-    const search = this.searchTerm.toLowerCase().trim();
+    return this.films.filter(film => {
 
-    return this.films.filter(film =>
-      film.title.toLowerCase().includes(search)
-    );
+      const search = this.searchTerm.toLowerCase().trim();
+
+      const matchesSearch =
+        film.title.toLowerCase().includes(search) ||
+        film.director?.toLowerCase().includes(search);
+
+      const matchesGenre =
+        !this.genreFilter ||
+        film.genre?.toLowerCase() === this.genreFilter.toLowerCase();
+
+      const matchesRating =
+        film.rating >= this.minRatingFilter;
+
+      const matchesYear =
+        !this.releaseYearFilter ||
+        film.releaseYear?.toString() === this.releaseYearFilter;
+
+      return matchesSearch &&
+            matchesGenre &&
+            matchesRating &&
+            matchesYear;
+    });
   }
 
   // Genera le stelle della valutazione
@@ -133,6 +155,21 @@ export class FilmComponent implements OnInit {
         console.error('Errore durante l\'eliminazione:', error);
       }
     });
+  }
+
+  get availableGenres(): string[] {
+    return [...new Set(
+      this.films
+        .map(film => film.genre)
+        .filter(genre => genre?.trim())
+    )].sort();
+  }
+
+  resetFilters(): void {
+    this.searchTerm = '';
+    this.genreFilter = '';
+    this.minRatingFilter = 0;
+    this.releaseYearFilter = '';
   }
 
 }
