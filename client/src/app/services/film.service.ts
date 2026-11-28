@@ -16,4 +16,8 @@ export class FilmService {
   getFilms(): Observable<Film[]> {
     return this.http.get<Film[]>(this.apiUrl);
   }
+
+  addFilm(film: Film): Observable<Film> {
+    return this.http.post<Film>(this.apiUrl, film);
+  }
 }

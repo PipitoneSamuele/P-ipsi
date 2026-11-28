@@ -20,4 +20,9 @@ public class FilmController {
     public List<Film> getAllFilms() {
         return filmService.getAllFilms();
     }
+
+    @PostMapping
+    public Film addFilm(@RequestBody Film film) {
+        return filmService.addFilm(film);
+    }
 }

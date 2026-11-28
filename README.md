@@ -8,5 +8,7 @@
   - Script to run every service or dockerized environment
   - Build various proxies and envs to create 2 environment, like local and dev
 - Film:
-    - Search bar with various filters like: watch date, name, ratings, ecc.
+    - Search bar with various filters like: watch date, ratings, ecc.
     - Possibility to add a watched film, maybe with support of external systems like imdb
+    - Build the film detail
+    - Dynamic images, external sites seems to be the only way

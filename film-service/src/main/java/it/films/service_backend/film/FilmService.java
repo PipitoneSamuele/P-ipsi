@@ -9,12 +9,17 @@ import java.util.List;
 public class FilmService {
 
     private final FilmRepository filmRepository;
+
     public FilmService(FilmRepository filmRepository) {
         this.filmRepository = filmRepository;
     }
 
     public List<Film> getAllFilms() {
         return filmRepository.findAll();
+    }
+
+    public Film addFilm(Film film) {
+        return filmRepository.save(film);
     }
 
 }

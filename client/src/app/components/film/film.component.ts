@@ -13,11 +13,20 @@ import { DatePipe } from '@angular/common';
 })
 export class FilmComponent {
   
-films: Film[] = [];
+  films: Film[] = [];
   searchTerm = '';
 
   loading = false;
   errorMessage = '';
+
+  showForm = false;
+  newFilm: Film = {
+    id: '',
+    title: '',
+    posterUrl: '',
+    rating: 0,
+    watchDate: ''
+  };
 
   constructor(private filmService: FilmService) {}
 
@@ -52,6 +61,31 @@ films: Film[] = [];
     return Array.from({ length: 5 }, (_, index) =>
       index < rating ? '★' : '☆'
     );
+  }
+
+  toggleForm(): void {
+    this.showForm = !this.showForm;
+  }
+
+  addFilm(): void {
+    this.filmService.addFilm(this.newFilm).subscribe({
+      next: (film) => {
+        this.films.push(film);
+
+        this.newFilm = {
+          id: '',
+          title: '',
+          posterUrl: '',
+          rating: 0,
+          watchDate: ''
+        };
+
+        this.showForm = false;
+      },
+      error: (error) => {
+        console.error('Errore durante l\'aggiunta del film:', error);
+      }
+    });
   }
 
 }

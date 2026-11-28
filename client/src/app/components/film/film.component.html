@@ -1,14 +1,107 @@
 
 <div class="film-page">
 
-  <!-- Barra di ricerca -->
-  <div class="search-bar">
-    <input
-      type="text"
-      placeholder="Cerca un film..."
-      [(ngModel)]="searchTerm"
-    />
+  <!-- Toolbar -->
+  <div class="toolbar">
+
+    <button class="add-film-button" (click)="toggleForm()">
+      {{ showForm ? 'Annulla' : '+ Aggiungi film' }}
+    </button>
+
+    <!-- Barra di ricerca -->
+    <div class="search-bar">
+      <input
+        type="text"
+        placeholder="Cerca un film..."
+        [(ngModel)]="searchTerm"
+      />
+    </div>
+
   </div>
+
+  <!-- Modal per aggiungere un film -->
+  @if (showForm) {
+    <div class="modal-overlay" (click)="toggleForm()">
+
+      <div class="modal-content" (click)="$event.stopPropagation()">
+
+        <!-- Header modal -->
+        <div class="modal-header">
+          <h2>Aggiungi un film</h2>
+
+          <button
+            type="button"
+            class="close-modal-button"
+            (click)="toggleForm()"
+          >
+            &times;
+          </button>
+        </div>
+
+        <!-- Form -->
+        <form class="film-form" (ngSubmit)="addFilm()">
+
+          <label for="title">Titolo</label>
+          <input
+            id="title"
+            type="text"
+            [(ngModel)]="newFilm.title"
+            name="title"
+            placeholder="Inserisci il titolo"
+            required
+          />
+
+          <label for="posterUrl">URL locandina</label>
+          <input
+            id="posterUrl"
+            type="url"
+            [(ngModel)]="newFilm.posterUrl"
+            name="posterUrl"
+            placeholder="https://..."
+            required
+          />
+
+          <label for="rating">Voto</label>
+          <select
+            id="rating"
+            [(ngModel)]="newFilm.rating"
+            name="rating"
+            required
+          >
+            <option [ngValue]="1">★☆☆☆☆</option>
+            <option [ngValue]="2">★★☆☆☆</option>
+            <option [ngValue]="3">★★★☆☆</option>
+            <option [ngValue]="4">★★★★☆</option>
+            <option [ngValue]="5">★★★★★</option>
+          </select>
+
+          <label for="watchDate">Data di visione</label>
+          <input
+            id="watchDate"
+            type="date"
+            [(ngModel)]="newFilm.watchDate"
+            name="watchDate"
+            required
+          />
+
+          <!-- Pulsanti -->
+          <div class="form-buttons">
+
+            <button type="button" class="cancel-button" (click)="toggleForm()">
+              Annulla
+            </button>
+
+            <button type="submit" class="save-button">
+              Salva film
+            </button>
+
+          </div>
+
+        </form>
+
+      </div>
+    </div>
+  }
 
   <!-- Caricamento -->
   @if (loading) {
@@ -44,7 +137,7 @@
             }
           </div>
 
-          <!-- Data di visualizzazione -->
+          <!-- Data di visione -->
           <div class="watch-date">
             <span>
               Visto il {{ film.watchDate | date:'dd/MM/yyyy' }}
