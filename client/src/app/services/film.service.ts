@@ -17,7 +17,15 @@ export class FilmService {
     return this.http.get<Film[]>(this.apiUrl);
   }
 
-  addFilm(film: Film): Observable<Film> {
-    return this.http.post<Film>(this.apiUrl, film);
+  addFilm(film: Omit<Film, 'id'>) {
+    return this.http.post<Film>(
+      'http://localhost:8080/api/films',
+      film
+    );
   }
+
+  deleteFilm(id: string) {
+    return this.http.delete<void>(`http://localhost:8080/api/films/${id}`);
+  }
+
 }

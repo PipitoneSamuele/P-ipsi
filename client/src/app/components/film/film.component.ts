@@ -1,8 +1,10 @@
-import { Component } from '@angular/core';
-import { Film } from '../../models/film';
-import { FilmService } from '../../services/film.service';
+
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { DatePipe } from '@angular/common';
+
+import { Film } from '../../models/film';
+import { FilmService } from '../../services/film.service';
 
 @Component({
   selector: 'app-film',
@@ -11,8 +13,10 @@ import { DatePipe } from '@angular/common';
   templateUrl: './film.component.html',
   styleUrl: './film.component.sass'
 })
-export class FilmComponent {
-  
+export class FilmComponent implements OnInit {
+
+  private readonly DEFAULT_POSTER = 'https://placehold.co/300x450';
+
   films: Film[] = [];
   searchTerm = '';
 
@@ -20,13 +24,8 @@ export class FilmComponent {
   errorMessage = '';
 
   showForm = false;
-  newFilm: Film = {
-    id: '',
-    title: '',
-    posterUrl: '',
-    rating: 0,
-    watchDate: ''
-  };
+
+  newFilm: Film = this.createEmptyFilm();
 
   constructor(private filmService: FilmService) {}
 
@@ -34,6 +33,18 @@ export class FilmComponent {
     this.loadFilms();
   }
 
+  // Crea un nuovo oggetto film vuoto
+  private createEmptyFilm(): Film {
+    return {
+      id: '',
+      title: '',
+      posterUrl: '',
+      rating: 0,
+      watchDate: ''
+    };
+  }
+
+  // Carica i film dal backend
   loadFilms(): void {
     this.loading = true;
     this.errorMessage = '';
@@ -44,41 +55,67 @@ export class FilmComponent {
         this.loading = false;
       },
       error: (error) => {
-        console.error('Errore durante il caricamento dei film:', error);
+        console.error('Errore durante il caricamento:', error);
         this.errorMessage = 'Impossibile caricare i film.';
         this.loading = false;
       }
     });
   }
 
+  // Filtra i film in base al titolo
   get filteredFilms(): Film[] {
+    const search = this.searchTerm.toLowerCase().trim();
+
     return this.films.filter(film =>
-      film.title.toLowerCase().includes(this.searchTerm.toLowerCase())
+      film.title.toLowerCase().includes(search)
     );
   }
 
+  // Genera le stelle della valutazione
   getStars(rating: number): string[] {
     return Array.from({ length: 5 }, (_, index) =>
       index < rating ? '★' : '☆'
     );
   }
 
+  // Mostra o nasconde il form
   toggleForm(): void {
     this.showForm = !this.showForm;
   }
 
-  addFilm() {
-    if (!this.newFilm.posterUrl) {
-      this.newFilm.posterUrl = 'https://placehold.co/300x450';
-    }
+  // Aggiunge un film
+  addFilm(): void {
+    const filmToSave = {
+      title: this.newFilm.title.trim(),
+      posterUrl: this.newFilm.posterUrl.trim() || this.DEFAULT_POSTER,
+      rating: this.newFilm.rating,
+      watchDate: this.newFilm.watchDate
+    };
 
-    this.filmService.addFilm(this.newFilm).subscribe({
+    this.filmService.addFilm(filmToSave).subscribe({
       next: (film) => {
         this.films.push(film);
+        this.newFilm = this.createEmptyFilm();
         this.showForm = false;
       },
       error: (error) => {
-        console.error(error);
+        console.error('Errore durante il salvataggio:', error);
+      }
+    });
+  }
+
+  // Elimina un film
+  deleteFilm(film: Film, event: MouseEvent): void {
+    event.stopPropagation();
+
+    if (!film.id) return;
+
+    this.filmService.deleteFilm(film.id).subscribe({
+      next: () => {
+        this.films = this.films.filter(f => f.id !== film.id);
+      },
+      error: (error) => {
+        console.error('Errore durante l\'eliminazione:', error);
       }
     });
   }

@@ -121,6 +121,16 @@
 
         <div class="film-card">
 
+          <!-- Pulsante elimina -->
+          <button
+            type="button"
+            class="delete-film-button"
+            (click)="deleteFilm(film, $event)"
+            title="Elimina film"
+          >
+            &times;
+          </button>
+
           <!-- Locandina -->
           <img
             [src]="film.posterUrl"
