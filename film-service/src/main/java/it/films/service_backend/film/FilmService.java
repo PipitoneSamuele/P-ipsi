@@ -18,6 +18,11 @@ public class FilmService {
         return filmRepository.findAll();
     }
 
+    public Film getFilmById(String id) {
+        return filmRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Film non trovato"));
+    }
+
     public Film addFilm(Film film) {
         return filmRepository.save(film);
     }

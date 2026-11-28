@@ -1,1 +1,71 @@
-<p>film-detail works!</p>
+
+@if (loading) {
+  <p>Caricamento film...</p>
+}
+
+@if (errorMessage) {
+  <p>{{ errorMessage }}</p>
+}
+
+@if (film; as f) {
+  <div class="detail-container">
+
+    <a routerLink="/films" class="back-button">
+      ← Torna al catalogo
+    </a>
+
+    <div class="film-header">
+
+      <img
+        [src]="f.posterUrl || 'https://placehold.co/300x450'"
+        [alt]="f.title"
+        class="film-poster"
+      />
+
+      <div class="film-info">
+
+        <h1>{{ f.title }}</h1>
+
+        <p class="film-subtitle">
+          {{ f.releaseYear || 'Anno non disponibile' }}
+          ·
+          {{ f.genre || 'Genere non specificato' }}
+        </p>
+
+        <p>
+          <strong>Regista:</strong>
+          {{ f.director || 'Non specificato' }}
+        </p>
+
+        <p>
+          <strong>Durata:</strong>
+          {{ f.duration ? f.duration + ' minuti' : 'Non specificata' }}
+        </p>
+
+        <div class="rating">
+          @for (star of getStars(f.rating); track $index) {
+            <span>{{ star }}</span>
+          }
+          <small>{{ f.rating }}/5</small>
+        </div>
+
+        <p>
+          <strong>Data di visione:</strong>
+          {{ f.watchDate ? (f.watchDate | date:'dd/MM/yyyy') : 'Non specificata' }}
+        </p>
+
+      </div>
+    </div>
+
+    <section class="detail-section">
+      <h2>Trama</h2>
+      <p>{{ f.plot || 'Nessuna trama inserita.' }}</p>
+    </section>
+
+    <section class="detail-section">
+      <h2>La mia recensione</h2>
+      <p>{{ f.personalReview || 'Nessuna recensione inserita.' }}</p>
+    </section>
+
+  </div>
+}

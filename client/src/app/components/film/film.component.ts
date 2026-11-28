@@ -41,7 +41,14 @@ export class FilmComponent implements OnInit {
       title: '',
       posterUrl: '',
       rating: 0,
-      watchDate: ''
+      watchDate: '',
+
+      releaseYear: 0,
+      genre: '',
+      director: '',
+      duration: 0,
+      plot: '',
+      personalReview: ''
     };
   }
 
@@ -90,7 +97,14 @@ export class FilmComponent implements OnInit {
       title: this.newFilm.title.trim(),
       posterUrl: this.newFilm.posterUrl.trim() || this.DEFAULT_POSTER,
       rating: this.newFilm.rating,
-      watchDate: this.newFilm.watchDate
+      watchDate: this.newFilm.watchDate,
+
+      releaseYear: this.newFilm.releaseYear,
+      genre: this.newFilm.genre,
+      director: this.newFilm.director.trim(),
+      duration: this.newFilm.duration,
+      plot: this.newFilm.plot.trim(),
+      personalReview: this.newFilm.personalReview.trim()
     };
 
     this.filmService.addFilm(filmToSave).subscribe({

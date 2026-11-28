@@ -1,0 +1,77 @@
+
+.detail-container
+  max-width: 1000px
+  margin: 40px auto
+  padding: 20px
+
+.back-button
+  display: inline-block
+  margin-bottom: 30px
+  color: inherit
+  text-decoration: none
+  font-weight: 600
+
+  &:hover
+    opacity: 0.7
+
+.film-header
+  display: flex
+  gap: 35px
+  align-items: flex-start
+
+.film-poster
+  width: 260px
+  height: auto
+  border-radius: 12px
+  object-fit: cover
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25)
+
+.film-info
+  flex: 1
+
+  h1
+    font-size: 2.5rem
+    margin-top: 0
+    margin-bottom: 10px
+
+.film-subtitle
+  opacity: 0.7
+  margin-bottom: 25px
+
+.rating
+  display: flex
+  align-items: center
+  gap: 4px
+  color: #e6a23c
+  font-size: 1.5rem
+  margin: 20px 0
+
+  small
+    font-size: 0.9rem
+    color: inherit
+    margin-left: 8px
+
+.detail-section
+  margin-top: 40px
+
+  h2
+    font-size: 1.5rem
+    margin-bottom: 15px
+
+  p
+    line-height: 1.7
+    white-space: pre-line
+
+@media (max-width: 600px)
+  .film-header
+    flex-direction: column
+    align-items: center
+
+  .film-poster
+    width: 200px
+
+  .film-info
+    width: 100%
+
+    h1
+      font-size: 2rem

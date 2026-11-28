@@ -10,5 +10,4 @@
 - Film:
     - Search bar with various filters like: watch date, ratings, ecc.
     - Add a watched film with support of external systems like imdb, especially for image URL
-    - Build the film detail
     - Dynamic images, external sites seems to be the only way

@@ -84,6 +84,76 @@
             required
           />
 
+          <!-- Anno di uscita -->
+          <div class="form-group">
+            <label for="releaseYear">Anno di uscita</label>
+            <input
+              id="releaseYear"
+              type="number"
+              [(ngModel)]="newFilm.releaseYear"
+              name="releaseYear"
+              placeholder="Es. 2014"
+            />
+          </div>
+
+          <!-- Genere -->
+          <div class="form-group">
+            <label for="genre">Genere</label>
+            <input
+              id="genre"
+              type="text"
+              [(ngModel)]="newFilm.genre"
+              name="genre"
+              placeholder="Es. Fantascienza"
+            />
+          </div>
+
+          <!-- Regista -->
+          <div class="form-group">
+            <label for="director">Regista</label>
+            <input
+              id="director"
+              type="text"
+              [(ngModel)]="newFilm.director"
+              name="director"
+              placeholder="Es. Christopher Nolan"
+            />
+          </div>
+
+          <!-- Durata -->
+          <div class="form-group">
+            <label for="duration">Durata (minuti)</label>
+            <input
+              id="duration"
+              type="number"
+              [(ngModel)]="newFilm.duration"
+              name="duration"
+              placeholder="Es. 169"
+            />
+          </div>
+
+          <!-- Trama -->
+          <div class="form-group">
+            <label for="plot">Trama</label>
+            <textarea
+              id="plot"
+              [(ngModel)]="newFilm.plot"
+              name="plot"
+              placeholder="Inserisci la trama del film..."
+            ></textarea>
+          </div>
+
+          <!-- Recensione personale -->
+          <div class="form-group">
+            <label for="personalReview">La tua recensione</label>
+            <textarea
+              id="personalReview"
+              [(ngModel)]="newFilm.personalReview"
+              name="personalReview"
+              placeholder="Scrivi le tue impressioni..."
+            ></textarea>
+          </div>
+
           <!-- Pulsanti -->
           <div class="form-buttons">
 

@@ -17,6 +17,10 @@ export class FilmService {
     return this.http.get<Film[]>(this.apiUrl);
   }
 
+  getFilmById(id: string) {
+    return this.http.get<Film>(`http://localhost:8080/api/films/${id}`);
+  }
+
   addFilm(film: Omit<Film, 'id'>) {
     return this.http.post<Film>(
       'http://localhost:8080/api/films',

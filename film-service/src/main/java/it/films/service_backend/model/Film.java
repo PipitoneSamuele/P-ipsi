@@ -14,6 +14,13 @@ public class Film {
     private Integer rating;
     private String watchDate;
 
+    private Integer releaseYear;
+    private String genre;
+    private String director;
+    private Integer duration;
+    private String plot;
+    private String personalReview;
+
     public Film() {
     }
 
@@ -69,5 +76,53 @@ public class Film {
 
     public void setWatchDate(String watchDate) {
         this.watchDate = watchDate;
+    }
+
+    public Integer getReleaseYear() {
+        return releaseYear;
+    }
+
+    public void setReleaseYear(Integer releaseYear) {
+        this.releaseYear = releaseYear;
+    }
+
+    public String getGenre() {
+        return genre;
+    }
+
+    public void setGenre(String genre) {
+        this.genre = genre;
+    }
+
+    public String getDirector() {
+        return director;
+    }
+
+    public void setDirector(String director) {
+        this.director = director;
+    }
+
+    public Integer getDuration() {
+        return duration;
+    }
+
+    public void setDuration(Integer duration) {
+        this.duration = duration;
+    }
+
+    public String getPlot() {
+        return plot;
+    }
+
+    public void setPlot(String plot) {
+        this.plot = plot;
+    }
+
+    public String getPersonalReview() {
+        return personalReview;
+    }
+
+    public void setPersonalReview(String personalReview) {
+        this.personalReview = personalReview;
     }
 }

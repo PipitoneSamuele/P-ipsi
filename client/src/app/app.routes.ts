@@ -13,7 +13,7 @@ export const routes: Routes = [
     },
     {
         path: '',
-        redirectTo: 'films',
+        redirectTo: '',
         pathMatch: 'full'
     }
 ];
